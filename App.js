@@ -17,7 +17,11 @@ function App() {
           component={Welcome}
           options={{ title: 'Customer Relationship Management' }}
         />
-        <Stack.Screen name='RegionList' component={RegionList} />
+        <Stack.Screen
+          name='RegionList'
+          component={RegionList}
+          options={{ title: 'Region List' }}
+        />
         <Stack.Screen name='CustomerList' component={CustomerList} />
         <Stack.Screen name='CustomerDetails' component={Customer} />
         <Stack.Screen
