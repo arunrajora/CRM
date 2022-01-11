@@ -5,6 +5,7 @@ import CustomerList from './src/screens/CustomerList';
 import EditCustomer from './src/screens/EditCustomer';
 import RegionList from './src/screens/RegionList';
 import Welcome from './src/screens/Welcome';
+import { StyleSheet, Text, View, Button, FlatList } from 'react-native';
 
 const Stack = createNativeStackNavigator();
 
@@ -22,12 +23,46 @@ function App() {
           component={RegionList}
           options={{ title: 'Region List' }}
         />
-        <Stack.Screen name='CustomerList' component={CustomerList} />
-        <Stack.Screen name='CustomerDetails' component={Customer} />
+        <Stack.Screen
+          name='CustomerList'
+          component={CustomerList}
+          options={({ route }) => ({
+            title: ` ${route.params.name} Customers`,
+          })}
+        />
+        <Stack.Screen
+          name='CustomerDetails'
+          component={Customer}
+          options={({ route, navigation }) => {
+            return {
+              headerTitle: () => (
+                <Text>Customer Details: {route.params.firstName}</Text>
+              ),
+              headerRight: () => (
+                <Button
+                  onPress={() => navigation.navigate('CustomerEdit')}
+                  title='Edit'
+                  color='#00cc00'
+                />
+              ),
+            };
+          }}
+        />
         <Stack.Screen
           name='CustomerEdit'
           component={EditCustomer}
-          options={({ route }) => ({ title: 'Editing customer' })}
+          options={({ route, navigation }) => {
+            return {
+              headerTitle: () => <Text>Edit Customer Details</Text>,
+              headerRight: () => (
+                <Button
+                  onPress={() => alert('save details')}
+                  title='Save'
+                  color='#00cc00'
+                />
+              ),
+            };
+          }}
         />
       </Stack.Navigator>
     </NavigationContainer>

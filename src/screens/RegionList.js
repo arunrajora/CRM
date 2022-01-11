@@ -17,7 +17,12 @@ function RegionList({ navigation }) {
           <Button
             key={id}
             title={name}
-            onPress={() => navigation.navigate('CustomerList')}
+            onPress={() =>
+              navigation.navigate('CustomerList', {
+                id,
+                name,
+              })
+            }
           ></Button>
         )}
       />
