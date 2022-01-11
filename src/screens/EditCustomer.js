@@ -9,12 +9,15 @@ import {
   FlatList,
 } from 'react-native';
 
+import { Picker } from '@react-native-picker/picker';
+import DateTimePicker from '@react-native-community/datetimepicker';
+
 function EditCustomer({ navigation }) {
   const customer = {
     id: 1,
     firstName: 'Melissa',
     lastName: 'Morris',
-    region: 'North East',
+    region: 3,
     active: true,
     reminderTime: '20 January 2022, 04:44 PM',
   };
@@ -40,11 +43,7 @@ function EditCustomer({ navigation }) {
         maxLength={50}
         placeholder='Last Name'
       />
-      <View>
-        <Text>Active:</Text>
-        <Switch value={customer?.active} />
-      </View>
-      <FlatList
+      {/* <FlatList
         data={regions}
         renderItem={({ item: { id, name } }) => (
           <Button
@@ -54,6 +53,41 @@ function EditCustomer({ navigation }) {
             onPress={() => alert('change region')}
           ></Button>
         )}
+      /> */}
+      <View>
+        <Text>Active:</Text>
+        <Switch value={customer?.active} />
+      </View>
+      <Text>Region:</Text>
+      <Picker
+        selectedValue={customer.region}
+        onValueChange={(itemValue, itemIndex) => alert(itemValue)}
+        style={{
+          alignSelf: 'stretch',
+        }}
+      >
+        {regions.map(({ id, name }) => (
+          <Picker.Item key={id} label={name} value={id} />
+        ))}
+      </Picker>
+      <DateTimePicker
+        style={{
+          alignSelf: 'stretch',
+        }}
+        value={new Date(1598051730000)}
+        mode='date'
+        display='spinner'
+        onChange={(value) => console.log(value)}
+      />
+      <DateTimePicker
+        style={{
+          alignSelf: 'stretch',
+        }}
+        value={new Date(1598051730000)}
+        mode='time'
+        is24Hour={false}
+        display='spinner'
+        onChange={(value) => console.log(value)}
       />
     </SafeAreaView>
   );
@@ -63,7 +97,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     justifyContent: 'flex-start',
   },
   input: {

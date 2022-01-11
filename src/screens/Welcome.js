@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, Button } from 'react-native';
 function Welcome({ navigation }) {
   return (
     <View style={styles.container}>
-      <Text>Welcome to Customer Relationship Management</Text>
+      <Text>Welcome to CRM</Text>
       <Button
         title='View all regions'
         onPress={() => navigation.navigate('RegionList')}

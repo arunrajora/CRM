@@ -32,19 +32,19 @@ function Customer({ navigation }) {
       alert('Failed to get push token for push notification!');
       return;
     }
-    alert('10 seconds to go');
-    const result = await Notifications.scheduleNotificationAsync({
-      content: {
-        title: 'Talk to customer',
-        body: `Talk to ${customer.firstName} ${customer.lastName}`,
-        data: { data: customer },
-        sound: true,
-        vibrate: true,
-        priority: 'high',
-      },
-      trigger: new Date().getTime() + 10000,
-    });
-    alert(result);
+    // alert('10 seconds to go');
+    // const result = await Notifications.scheduleNotificationAsync({
+    //   content: {
+    //     title: 'Talk to customer',
+    //     body: `Talk to ${customer.firstName} ${customer.lastName}`,
+    //     data: { data: customer },
+    //     sound: true,
+    //     vibrate: true,
+    //     priority: 'high',
+    //   },
+    //   trigger: new Date().getTime() + 10000,
+    // });
+    // alert(result);
   }, []);
 
   return (
