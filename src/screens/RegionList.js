@@ -1,14 +1,8 @@
 import { StyleSheet, Text, View, Button, FlatList } from 'react-native';
+import { useSelector } from 'react-redux';
 
 function RegionList({ navigation }) {
-  const regions = [
-    { id: 1, name: 'North East' },
-    { id: 2, name: 'North West' },
-    { id: 3, name: 'South East' },
-    { id: 4, name: 'South West' },
-    { id: 5, name: 'North' },
-    { id: 6, name: 'Mid North' },
-  ];
+  const regions = useSelector(({ regions }) => regions);
   return (
     <View style={styles.container}>
       <FlatList

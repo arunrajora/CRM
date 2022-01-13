@@ -2,16 +2,10 @@ import { useEffect } from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
 
 import * as Notifications from 'expo-notifications';
+import { useSelector } from 'react-redux';
 
 function Customer({ navigation }) {
-  const customer = {
-    id: 1,
-    firstName: 'Melissa',
-    lastName: 'Morris',
-    region: 'North East',
-    active: false,
-    reminderTime: '20 January 2022, 04:44 PM',
-  };
+  const customer = useSelector(({ customers }) => customers[0]);
 
   useEffect(async () => {
     Notifications.setNotificationHandler({

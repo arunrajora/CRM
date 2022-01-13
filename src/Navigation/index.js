@@ -1,8 +1,8 @@
-import Customer from '../Screens/Customer';
-import CustomerList from '../Screens/CustomerList';
-import EditCustomer from '../Screens/EditCustomer';
-import RegionList from '../Screens/RegionList';
-import Welcome from '../Screens/Welcome';
+import Customer from '../screens/Customer';
+import CustomerList from '../screens/CustomerList';
+import EditCustomer from '../screens/EditCustomer';
+import RegionList from '../screens/RegionList';
+import Welcome from '../screens/Welcome';
 import { StyleSheet, Text, View, Button, FlatList } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 

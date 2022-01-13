@@ -3,7 +3,8 @@
     "name": "CRM",
     "slug": "CRM",
     "version": "1.0.0",
-    "orientation": "portrait",
+    "orientation": "default",
+    "userInterfaceStyle": "automatic",
     "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/splash.png",
