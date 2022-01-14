@@ -1,6 +1,13 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { StyleSheet, SafeAreaView } from 'react-native';
-import { Layout, Text, Input, Toggle } from '@ui-kitten/components';
+import {
+  Layout,
+  Text,
+  Input,
+  Toggle,
+  Button,
+  Icon,
+} from '@ui-kitten/components';
 import { Picker } from '@react-native-picker/picker';
 import DateTimePicker from '../components/DateTimePicker';
 import { useSelector } from 'react-redux';
@@ -16,6 +23,19 @@ function EditCustomer({ navigation, route }) {
   const [isActive, setIsActive] = useState(customer?.active ?? false);
   const [region, setRegion] = useState(customer?.region ?? 0);
   const [reminderTime, setReminderTime] = useState(new Date()); //customer?.reminderTime);
+
+  useEffect(() => {
+    navigation.setOptions({
+      title: 'Edit Customer',
+      headerRight: () => (
+        <Button
+          appearance='ghost'
+          accessoryLeft={<Icon name='save' />}
+          onPress={() => console.log('save details')}
+        />
+      ),
+    });
+  }, [navigation]);
 
   return (
     <Layout style={styles.container}>

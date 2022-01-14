@@ -24,7 +24,7 @@ function NavigationScreens(props) {
         component={RegionList}
         options={({ route, navigation }) => {
           return {
-            headerTitle: () => <Text>Region List</Text>,
+            title: 'Region List',
             headerRight: () => (
               <Button
                 appearance='ghost'
@@ -49,7 +49,7 @@ function NavigationScreens(props) {
         component={Customer}
         options={({ route, navigation }) => {
           return {
-            headerTitle: () => <Text>Customer Details</Text>,
+            title: 'Customer Details',
             headerRight: () => (
               <Button
                 appearance='ghost'
@@ -65,18 +65,7 @@ function NavigationScreens(props) {
       <Stack.Screen
         name='CustomerEdit'
         component={EditCustomer}
-        options={({ route, navigation }) => {
-          return {
-            headerTitle: () => <Text>Edit Customer</Text>,
-            headerRight: () => (
-              <Button
-                appearance='ghost'
-                accessoryLeft={<Icon name='save' />}
-                onPress={() => console.log('save details')}
-              />
-            ),
-          };
-        }}
+        options={{ title: 'Edit Customer' }}
       />
     </Stack.Navigator>
   );
