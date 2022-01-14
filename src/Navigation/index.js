@@ -3,12 +3,15 @@ import CustomerList from '../screens/CustomerList';
 import EditCustomer from '../screens/EditCustomer';
 import RegionList from '../screens/RegionList';
 import Welcome from '../screens/Welcome';
-import { StyleSheet, Text, View, Button, FlatList } from 'react-native';
+import { Text, Button, Icon } from '@ui-kitten/components';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { useSelector } from 'react-redux';
 
 const Stack = createNativeStackNavigator();
 
 function NavigationScreens(props) {
+  const regions = useSelector(({ regions }) => regions);
+
   return (
     <Stack.Navigator>
       <Stack.Screen
@@ -19,13 +22,26 @@ function NavigationScreens(props) {
       <Stack.Screen
         name='RegionList'
         component={RegionList}
-        options={{ title: 'Region List' }}
+        options={({ route, navigation }) => {
+          return {
+            headerTitle: () => <Text>Region List</Text>,
+            headerRight: () => (
+              <Button
+                appearance='ghost'
+                accessoryLeft={<Icon name='edit' />}
+                onPress={() => navigation.navigate('CustomerEdit')}
+              />
+            ),
+          };
+        }}
       />
       <Stack.Screen
         name='CustomerList'
         component={CustomerList}
         options={({ route }) => ({
-          title: ` ${route.params.name} Customers`,
+          title: ` ${
+            regions.find(({ id }) => id === route.params.id)?.name
+          } Customers`,
         })}
       />
       <Stack.Screen
@@ -33,16 +49,14 @@ function NavigationScreens(props) {
         component={Customer}
         options={({ route, navigation }) => {
           return {
-            headerTitle: () => (
-              <Text>Customer Details: {route.params.firstName}</Text>
-            ),
+            headerTitle: () => <Text>Customer Details</Text>,
             headerRight: () => (
               <Button
+                appearance='ghost'
+                accessoryLeft={<Icon name='edit' />}
                 onPress={() =>
                   navigation.navigate('CustomerEdit', { id: route.params.id })
                 }
-                title='Edit'
-                color='#00cc00'
               />
             ),
           };
@@ -53,12 +67,12 @@ function NavigationScreens(props) {
         component={EditCustomer}
         options={({ route, navigation }) => {
           return {
-            headerTitle: () => <Text>Edit Customer Details</Text>,
+            headerTitle: () => <Text>Edit Customer</Text>,
             headerRight: () => (
               <Button
+                appearance='ghost'
+                accessoryLeft={<Icon name='save' />}
                 onPress={() => console.log('save details')}
-                title='Save'
-                color='#00cc00'
               />
             ),
           };

@@ -52,7 +52,6 @@ function Customer({ navigation, route }) {
     <Layout>
       <SafeAreaView>
         <Card
-          status='info'
           header={
             <Layout>
               <Text category='h3'>
