@@ -4,28 +4,34 @@ import { StyleSheet, Text, View, Button } from 'react-native';
 import * as Notifications from 'expo-notifications';
 import { useSelector } from 'react-redux';
 
-function Customer({ navigation }) {
-  const customer = useSelector(({ customers }) => customers[0]);
+function Customer({ navigation, route }) {
+  const customer = useSelector(({ customers }) =>
+    customers.find(({ id }) => id === route.params.id)
+  );
+
+  const customerRegion = useSelector(
+    ({ regions }) => regions.find(({ id }) => id === customer.region)?.name
+  );
 
   useEffect(async () => {
-    Notifications.setNotificationHandler({
-      handleNotification: async () => ({
-        shouldShowAlert: true,
-        shouldPlaySound: true,
-        shouldSetBadge: false,
-      }),
-    });
-    const { status: existingStatus } =
-      await Notifications.getPermissionsAsync();
-    let finalStatus = existingStatus;
-    if (existingStatus !== 'granted') {
-      const { status } = await Notifications.requestPermissionsAsync();
-      finalStatus = status;
-    }
-    if (finalStatus !== 'granted') {
-      alert('Failed to get push token for push notification!');
-      return;
-    }
+    // Notifications.setNotificationHandler({
+    //   handleNotification: async () => ({
+    //     shouldShowAlert: true,
+    //     shouldPlaySound: true,
+    //     shouldSetBadge: false,
+    //   }),
+    // });
+    // const { status: existingStatus } =
+    //   await Notifications.getPermissionsAsync();
+    // let finalStatus = existingStatus;
+    // if (existingStatus !== 'granted') {
+    //   const { status } = await Notifications.requestPermissionsAsync();
+    //   finalStatus = status;
+    // }
+    // if (finalStatus !== 'granted') {
+    //   alert('Failed to get push token for push notification!');
+    //   return;
+    // }
     // alert('10 seconds to go');
     // const result = await Notifications.scheduleNotificationAsync({
     //   content: {
@@ -46,8 +52,8 @@ function Customer({ navigation }) {
       <Text>
         Name: {customer.firstName} {customer.lastName}
       </Text>
-      <Text>Region: {customer.region}</Text>
-      <Text>{customer.active ? 'Active' : 'Not Active'}</Text>
+      <Text>Region: {customerRegion}</Text>
+      <Text>Status: {customer.active ? 'Active' : 'Not Active'}</Text>
       <Text>Reminder for {customer.reminderTime}</Text>
     </View>
   );

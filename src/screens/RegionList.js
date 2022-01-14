@@ -14,7 +14,6 @@ function RegionList({ navigation }) {
             onPress={() =>
               navigation.navigate('CustomerList', {
                 id,
-                name,
               })
             }
           ></Button>

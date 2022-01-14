@@ -22,7 +22,7 @@ function CustomerList({ navigation, route }) {
             title={`${item.firstName} ${item.lastName}`}
             onPress={() =>
               navigation.navigate('CustomerDetails', {
-                ...item,
+                id: item.id,
               })
             }
           ></Button>

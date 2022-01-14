@@ -38,7 +38,9 @@ function NavigationScreens(props) {
             ),
             headerRight: () => (
               <Button
-                onPress={() => navigation.navigate('CustomerEdit')}
+                onPress={() =>
+                  navigation.navigate('CustomerEdit', { id: route.params.id })
+                }
                 title='Edit'
                 color='#00cc00'
               />
@@ -54,7 +56,7 @@ function NavigationScreens(props) {
             headerTitle: () => <Text>Edit Customer Details</Text>,
             headerRight: () => (
               <Button
-                onPress={() => alert('save details')}
+                onPress={() => console.log('save details')}
                 title='Save'
                 color='#00cc00'
               />
