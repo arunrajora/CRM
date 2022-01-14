@@ -48,10 +48,6 @@ const styles = StyleSheet.create({
   primaryButton: {
     marginBottom: 10,
   },
-  icon: {
-    width: 32,
-    height: 32,
-  },
 });
 
 export default Welcome;
