@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, SafeAreaView } from 'react-native';
+import { Layout, Icon, Button, Text, Card } from '@ui-kitten/components';
 
 import * as Notifications from 'expo-notifications';
 import { useSelector } from 'react-redux';
@@ -48,24 +49,42 @@ function Customer({ navigation, route }) {
   }, []);
 
   return (
-    <View style={styles.container}>
-      <Text>
-        Name: {customer.firstName} {customer.lastName}
-      </Text>
-      <Text>Region: {customerRegion}</Text>
-      <Text>Status: {customer.active ? 'Active' : 'Not Active'}</Text>
-      <Text>Reminder for {customer.reminderTime}</Text>
-    </View>
+    <Layout>
+      <SafeAreaView>
+        <Card
+          status='info'
+          header={
+            <Layout>
+              <Text category='h3'>
+                {customer.firstName} {customer.lastName}
+              </Text>
+              <Button
+                status={customer.active ? 'info' : 'basic'}
+                size='tiny'
+                category='p2'
+                style={styles.button}
+              >
+                {customer.active ? 'Active' : 'Not Active'}
+              </Button>
+            </Layout>
+          }
+        >
+          <Text category='h6'>Region: {customerRegion}</Text>
+          {customer.reminderTime ? (
+            <Text category='h6'>Reminder: {customer.reminderTime}</Text>
+          ) : (
+            <Text category='h6'>No reminder set</Text>
+          )}
+        </Card>
+      </SafeAreaView>
+    </Layout>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'flex-start',
-    justifyContent: 'flex-start',
-    padding: 24,
+  button: {
+    width: 100,
+    flexWrap: 'wrap',
   },
 });
 
