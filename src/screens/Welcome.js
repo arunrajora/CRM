@@ -1,24 +1,56 @@
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet } from 'react-native';
+import { Layout, Text, Button, Icon } from '@ui-kitten/components';
+import { SafeAreaView, View } from 'react-native';
 
 function Welcome({ navigation }) {
   return (
-    <View style={styles.container}>
-      <Text>Welcome to CRM</Text>
-      <Button
-        title='View all regions'
-        onPress={() => navigation.navigate('RegionList')}
-      ></Button>
-      <Button title='Clear Storage'></Button>
-    </View>
+    <Layout style={styles.container}>
+      <SafeAreaView style={styles.container}>
+        <View style={styles.heading}>
+          <Text category='h1'>Welcome!</Text>
+        </View>
+        <Button
+          size='giant'
+          style={styles.primaryButton}
+          onPress={() => navigation.navigate('RegionList')}
+        >
+          View all regions
+        </Button>
+        <Button
+          appearance='ghost'
+          size='medium'
+          status='danger'
+          accessoryLeft={<Icon name='trash' />}
+          onPress={() => alert('Storage cleared')}
+        >
+          Clear Storage
+        </Button>
+      </SafeAreaView>
+    </Layout>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+    flexDirection: 'column',
+    height: '100%',
+    paddingBottom: 40,
+  },
+  heading: {
+    flexGrow: 1,
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  primaryButton: {
+    marginBottom: 10,
+  },
+  icon: {
+    width: 32,
+    height: 32,
   },
 });
 

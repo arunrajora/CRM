@@ -13,7 +13,6 @@ import {
 import { Picker } from '@react-native-picker/picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { useSelector } from 'react-redux';
-import DatePicker from 'react-native-date-picker';
 
 function EditCustomer({ navigation, route }) {
   const customer = useSelector(({ customers }) =>
@@ -26,6 +25,18 @@ function EditCustomer({ navigation, route }) {
   const [isActive, setIsActive] = useState(customer?.active ?? false);
   const [region, setRegion] = useState(customer?.region ?? 0);
   const [reminderTime, setReminderTime] = useState(new Date()); //customer?.reminderTime);
+
+  const [show, setShow] = useState(Platform.OS === 'ios');
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate || date;
+    setShow(false);
+    setReminderTime(currentDate);
+  };
+
+  const showDatepicker = () => {
+    setShow(true);
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <TextInput
@@ -59,46 +70,62 @@ function EditCustomer({ navigation, route }) {
         ))}
       </Picker>
       <Text>Set Reminder at-</Text>
-      {/* <View
-        style={{
-          flex: 1,
-          flexDirection: 'row',
-          alignItems: 'flex-start',
-          justifyContent: 'flex-start',
-        }}
-      >
-        <DateTimePicker
-          style={{
-            width: '50%',
-          }}
-          value={new Date(1598051730000)}
-          mode='datetime'
-          onChange={(value) => console.log(value)}
-        />
-        <DateTimePicker
-          style={{
-            width: '50%',
-          }}
-          value={new Date(reminderTime)}
-          mode='time'
-          is24Hour={false}
-          onChange={(value, selectedDate) =>
-            console.log('new time is', selectedDate)
-          }
-        />
-      </View> */}
-      <DatePicker
-        date={reminderTime}
-        onConfirm={(date) => {}}
-        onCancel={() => {}}
-      />
+      <View>
+        {Platform.OS !== 'ios' && (
+          <View>
+            <Button onPress={showDatepicker} title='Show!' />
+          </View>
+        )}
+        {Platform.OS === 'ios' && (
+          <DateTimePicker
+            value={reminderTime}
+            mode='datetime'
+            is24Hour={false}
+            display='spinner'
+            onChange={onChange}
+            textColor={'black'}
+            style={{
+              alignSelf: 'stretch',
+              width: 350,
+            }}
+          />
+        )}
+        {show && Platform.OS !== 'ios' && (
+          <>
+            <DateTimePicker
+              value={reminderTime}
+              mode='date'
+              is24Hour={false}
+              display='default'
+              onChange={onChange}
+              style={{
+                color: 'black',
+                alignSelf: 'stretch',
+                width: 300,
+              }}
+            />
+            <DateTimePicker
+              value={reminderTime}
+              mode='time'
+              is24Hour={false}
+              display='default'
+              onChange={onChange}
+              style={{
+                color: 'black',
+                alignSelf: 'stretch',
+                width: 300,
+              }}
+            />
+          </>
+        )}
+      </View>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 0,
     backgroundColor: '#fff',
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
