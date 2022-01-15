@@ -1,5 +1,12 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+export async function clearDataFromStorage() {
+  const keys = await AsyncStorage.getAllKeys();
+  if (keys.length) {
+    await AsyncStorage.clear();
+  }
+}
+
 export async function saveRegions(regions) {
   return AsyncStorage.setItem('regions', JSON.stringify(regions));
 }

@@ -1,5 +1,4 @@
 import { put, takeEvery } from 'redux-saga/effects';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { saveCustomers, getCustomers } from '../../utilities/async_storage';
 import { customers } from '../../utilities/initialCustomers.json';
 import { setCustomer, updateCustomer } from './CustomerSlice';

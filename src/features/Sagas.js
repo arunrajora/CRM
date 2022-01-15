@@ -1,14 +1,11 @@
 import { call, all, takeEvery, put, takeLatest } from 'redux-saga/effects';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { clearDataFromStorage } from '../utilities/async_storage';
 import { clearData as clearDataAction } from './customers/CustomerSlice';
 import { fetchRegions } from './regions/Sagas';
 import { fetchCustomers, watchSaveCustomer } from './customers/Sagas';
 
 function* clearData() {
-  const keys = yield call(AsyncStorage.getAllKeys);
-  if (keys.length) {
-    yield call(AsyncStorage.clear);
-  }
+  yield clearDataFromStorage();
   yield put(clearDataAction());
 }
 
