@@ -31,4 +31,21 @@ export async function getCustomers() {
   return null;
 }
 
-export async function saveCustomer(customer) {}
+export async function saveCustomer(customer) {
+  let customers = await getCustomers();
+  if (customers === null) {
+    customers = [customer];
+  }
+  let isExistingCustomer = false;
+  customers = customers.map((existingCustomer) => {
+    if (existingCustomer.id === customer.id) {
+      isExistingCustomer = true;
+      return customer;
+    }
+    return existingCustomer;
+  });
+  if (!isExistingCustomer) {
+    customers = customers.concat(customer);
+  }
+  return saveCustomers(customers);
+}

@@ -1,5 +1,13 @@
 import { put, takeEvery } from 'redux-saga/effects';
-import { saveCustomers, getCustomers } from '../../utilities/async_storage';
+import {
+  saveCustomers,
+  getCustomers,
+  saveCustomer as saveCustomerAsyncStorage,
+} from '../../utilities/async_storage';
+import {
+  setNotification,
+  removeNotification,
+} from '../../utilities/notifications';
 import { customers } from '../../utilities/initialCustomers.json';
 import { setCustomer, updateCustomer } from './CustomerSlice';
 import { v4 as uuidv4 } from 'uuid';
@@ -20,6 +28,21 @@ export function* saveCustomer({ customer }) {
       id: uuidv4(),
     };
   }
+  if (customer.notificationId) {
+    yield removeNotification(customer.notificationId);
+    customer = {
+      ...customer,
+      notificationId: null,
+    };
+  }
+  if (customer.reminderTime) {
+    const notificationId = yield setNotification(customer);
+    customer = {
+      ...customer,
+      notificationId,
+    };
+  }
+  yield saveCustomerAsyncStorage(customer);
   yield put(updateCustomer(customer));
 }
 
