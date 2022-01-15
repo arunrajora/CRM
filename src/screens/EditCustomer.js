@@ -89,16 +89,21 @@ function EditCustomer({ navigation, route }) {
           {!isReminderActive && 'No reminder active'}
         </Toggle>
         {isReminderActive && (
-          <DateTimePicker
-            value={reminderTime}
-            onChange={(date) => {
-              const diff = moment(date).diff(moment());
-              if (diff <= 0) {
-                alert('Reminder can only be set for future date and time');
-              }
-              setReminderTime(date);
-            }}
-          />
+          <>
+            <Text style={styles.text} category='h5'>
+              {moment(reminderTime).format('llll')}
+            </Text>
+            <DateTimePicker
+              value={reminderTime}
+              onChange={(date, skip_diff) => {
+                const diff = moment(date).diff(moment());
+                if (!skip_diff && diff <= 0) {
+                  alert('Reminder can only be set for future date and time');
+                }
+                setReminderTime(date);
+              }}
+            />
+          </>
         )}
       </SafeAreaView>
     </Layout>
@@ -112,6 +117,10 @@ const styles = StyleSheet.create({
   },
   input: {
     marginVertical: 12,
+  },
+  text: {
+    textAlign: 'center',
+    marginTop: 10,
   },
 });
 
