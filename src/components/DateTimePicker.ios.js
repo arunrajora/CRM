@@ -1,10 +1,7 @@
-import { useState } from 'react';
-import { Button, Layout } from '@ui-kitten/components';
+import { Layout } from '@ui-kitten/components';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import moment from 'moment';
 
 function Picker({ value, onChange }) {
-  console.log('value', value);
   return (
     <Layout>
       <DateTimePicker

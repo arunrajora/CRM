@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { StyleSheet, SafeAreaView } from 'react-native';
 import {
   Layout,
@@ -12,28 +12,53 @@ import { Picker } from '@react-native-picker/picker';
 import DateTimePicker from '../components/DateTimePicker';
 import { useSelector } from 'react-redux';
 import moment from 'moment';
+import { useDispatch } from 'react-redux';
 
 function EditCustomer({ navigation, route }) {
   const customer = useSelector(({ customers }) =>
     customers.find(({ id }) => id === route.params?.id)
   );
   const regions = useSelector(({ regions }) => regions);
+  const dispatch = useDispatch();
 
   const [firstName, setFirstName] = useState(customer?.firstName ?? '');
   const [lastName, setLastName] = useState(customer?.lastName ?? '');
   const [isActive, setIsActive] = useState(customer?.active ?? false);
-  const [region, setRegion] = useState(customer?.region ?? 0);
+  const [region, setRegion] = useState(customer?.region ?? regions[0].id);
   const [reminderTime, setReminderTime] = useState(
-    moment().add(5, 'minute').toDate()
-  ); //customer?.reminderTime);
+    customer?.reminderTime
+      ? new Date(customer.reminderTime)
+      : moment().add(5, 'minute').toDate()
+  );
   const [isReminderActive, setIsReminderActive] = useState(
-    reminderTime !== null
+    customer?.reminderTime !== null && customer?.reminderTime !== undefined
   );
 
   const isDateValid = isReminderActive
     ? moment(reminderTime).diff(moment()) > 0
     : true;
 
+  const saveCustomerDetails = useCallback(() => {
+    if (firstName.length === 0) {
+      alert('First name should not be empty.');
+    } else if (lastName.length === 0) {
+      alert('Last name should not be empty.');
+    } else if (isReminderActive && moment(reminderTime).diff(moment()) <= 0) {
+      alert('Date is in the past.');
+    } else {
+      const user = {
+        id: route.params?.id ?? null,
+        firstName,
+        lastName,
+        region,
+        active: isActive,
+        reminderTime: isReminderActive ? reminderTime.toISOString() : null,
+        notificationId: customer?.notificationId,
+      };
+      dispatch({ type: 'SAVE_CUSTOMER', customer: user });
+      navigation.goBack();
+    }
+  }, [firstName, lastName, isReminderActive, reminderTime, region, isActive]);
   useEffect(() => {
     navigation.setOptions({
       title: 'Edit Customer',
@@ -41,11 +66,11 @@ function EditCustomer({ navigation, route }) {
         <Button
           appearance='ghost'
           accessoryLeft={<Icon name='save' />}
-          onPress={() => console.log('save details')}
+          onPress={saveCustomerDetails}
         />
       ),
     });
-  }, [navigation]);
+  }, [navigation, saveCustomerDetails]);
 
   return (
     <Layout style={styles.container}>

@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { StyleSheet, SafeAreaView } from 'react-native';
 import { Layout, Icon, Button, Text, Card } from '@ui-kitten/components';
-
+import moment from 'moment';
 import * as Notifications from 'expo-notifications';
 import { useSelector } from 'react-redux';
 
@@ -68,11 +68,23 @@ function Customer({ navigation, route }) {
             </Layout>
           }
         >
-          <Text category='h6'>Region: {customerRegion}</Text>
+          <Text category='s1'>
+            Region: <Text category='p1'>{customerRegion}</Text>
+          </Text>
           {customer.reminderTime ? (
-            <Text category='h6'>Reminder: {customer.reminderTime}</Text>
+            <>
+              <Text category='s1'>
+                Reminder:{' '}
+                <Text category='p1'>
+                  {moment(customer.reminderTime).format('LLLL')}
+                </Text>
+              </Text>
+              <Text style={styles.text} category='p2'>
+                ({moment(customer.reminderTime).fromNow()})
+              </Text>
+            </>
           ) : (
-            <Text category='h6'>No reminder set</Text>
+            <Text category='s1'>No reminder set</Text>
           )}
         </Card>
       </SafeAreaView>
@@ -84,6 +96,9 @@ const styles = StyleSheet.create({
   button: {
     width: 100,
     flexWrap: 'wrap',
+  },
+  text: {
+    textAlign: 'center',
   },
 });
 

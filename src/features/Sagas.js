@@ -2,7 +2,7 @@ import { call, all, takeEvery, put, takeLatest } from 'redux-saga/effects';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { clearData as clearDataAction } from './customers/CustomerSlice';
 import { fetchRegions } from './regions/Sagas';
-import { fetchCustomers } from './customers/Sagas';
+import { fetchCustomers, watchSaveCustomer } from './customers/Sagas';
 
 function* clearData() {
   const keys = yield call(AsyncStorage.getAllKeys);
@@ -22,5 +22,5 @@ function* watchFetchInitialData() {
 }
 
 export default function* rootSaga() {
-  yield all([watchFetchInitialData(), watchClearData()]);
+  yield all([watchFetchInitialData(), watchClearData(), watchSaveCustomer()]);
 }

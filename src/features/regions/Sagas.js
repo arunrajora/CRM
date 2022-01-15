@@ -1,15 +1,13 @@
-import { put, takeEvery } from 'redux-saga/effects';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { regions } from '../../utils/initialRegions.json';
+import { put } from 'redux-saga/effects';
+import { regions } from '../../utilities/initialRegions.json';
 import { setRegion } from './RegionSlice';
+import { getRegions, saveRegions } from '../../utilities/async_storage';
 
 export function* fetchRegions() {
-  const regionsFromStorage = yield AsyncStorage.getItem('regions');
-  let initialRegions = regions;
-  if (regionsFromStorage === null) {
-    yield AsyncStorage.setItem('regions', JSON.stringify(regions));
-  } else {
-    initialRegions = JSON.parse(regionsFromStorage);
+  let initialRegions = yield getRegions();
+  if (initialRegions === null) {
+    yield saveRegions(regions);
+    initialRegions = regions;
   }
   yield put(setRegion(initialRegions));
 }

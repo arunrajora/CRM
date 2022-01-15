@@ -12,12 +12,9 @@ export const counterSlice = createSlice({
       );
       if (customerIndex != -1) {
         state[customerIndex] = action.payload;
+      } else {
+        state.push(action.payload);
       }
-
-      return action.payload;
-    },
-    addCustomer: (state, action) => {
-      state.push(action.payload);
     },
     clearData: (state, action) => {
       return [];
