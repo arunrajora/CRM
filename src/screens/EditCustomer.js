@@ -11,6 +11,7 @@ import {
 import { Picker } from '@react-native-picker/picker';
 import DateTimePicker from '../components/DateTimePicker';
 import { useSelector } from 'react-redux';
+import moment from 'moment';
 
 function EditCustomer({ navigation, route }) {
   const customer = useSelector(({ customers }) =>
@@ -22,7 +23,16 @@ function EditCustomer({ navigation, route }) {
   const [lastName, setLastName] = useState(customer?.lastName ?? '');
   const [isActive, setIsActive] = useState(customer?.active ?? false);
   const [region, setRegion] = useState(customer?.region ?? 0);
-  const [reminderTime, setReminderTime] = useState(new Date()); //customer?.reminderTime);
+  const [reminderTime, setReminderTime] = useState(
+    moment().add(5, 'minute').toDate()
+  ); //customer?.reminderTime);
+  const [isReminderActive, setIsReminderActive] = useState(
+    reminderTime !== null
+  );
+
+  const isDateValid = isReminderActive
+    ? moment(reminderTime).diff(moment()) > 0
+    : true;
 
   useEffect(() => {
     navigation.setOptions({
@@ -67,8 +77,29 @@ function EditCustomer({ navigation, route }) {
             <Picker.Item key={id} label={name} value={id} />
           ))}
         </Picker>
-        <Text category='p2'>Set Reminder at-</Text>
-        <DateTimePicker value={reminderTime} onChange={setReminderTime} />
+        <Toggle
+          status={isDateValid ? 'primary' : 'danger'}
+          checked={isReminderActive}
+          onChange={setIsReminderActive}
+        >
+          {!isDateValid && 'Invalid date from past'}
+          {isReminderActive &&
+            isDateValid &&
+            `Remind ${moment(reminderTime).fromNow()}`}
+          {!isReminderActive && 'No reminder active'}
+        </Toggle>
+        {isReminderActive && (
+          <DateTimePicker
+            value={reminderTime}
+            onChange={(date) => {
+              const diff = moment(date).diff(moment());
+              if (diff <= 0) {
+                alert('Reminder can only be set for future date and time');
+              }
+              setReminderTime(date);
+            }}
+          />
+        )}
       </SafeAreaView>
     </Layout>
   );
