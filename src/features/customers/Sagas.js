@@ -10,6 +10,7 @@ import {
 } from '../../utilities/notifications';
 import { customers } from '../../utilities/initialCustomers.json';
 import { setCustomer, updateCustomer } from './CustomerSlice';
+import 'react-native-get-random-values';
 import { v4 as uuidv4 } from 'uuid';
 
 export function* fetchCustomers() {

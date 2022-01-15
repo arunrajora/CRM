@@ -9,7 +9,7 @@ function* clearData() {
   const customers = yield getCustomers();
   if (customers) {
     for (const customer of customers) {
-      if (customer.reminderTime) {
+      if (customer.reminderTime && customer.notificationId) {
         yield removeNotification(customer.notificationId);
       }
     }

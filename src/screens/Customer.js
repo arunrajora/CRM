@@ -41,6 +41,7 @@ function Customer({ navigation, route }) {
               <Text category='s1'>
                 Reminder:{' '}
                 <Text category='p1'>
+                  {customer.reminderTime}
                   {moment(customer.reminderTime).format('LLLL')}
                 </Text>
               </Text>
