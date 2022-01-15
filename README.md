@@ -11,22 +11,12 @@ This is an application where you can-
 
 ## Install the dependencies
 
-run-
-```
-npm install
-```
-or
 ```
 yarn
 ```
 
 ## Start the application
 
-run-
-```
-npm start
-```
-or
 ```
 yarn start
 ```
