@@ -1,9 +1,10 @@
-import { call, all, takeEvery, put, takeLatest } from 'redux-saga/effects';
+import { all, takeEvery, put } from 'redux-saga/effects';
 import { clearDataFromStorage, getCustomers } from '../utilities/async_storage';
 import { removeNotification } from '../utilities/notifications';
 import { clearData as clearDataAction } from './customers/CustomerSlice';
 import { fetchRegions } from './regions/Sagas';
 import { fetchCustomers, watchSaveCustomer } from './customers/Sagas';
+import { fetchInitialDataAction, clearCustomerAction } from './actions';
 
 function* clearData() {
   const customers = yield getCustomers();
@@ -19,12 +20,12 @@ function* clearData() {
 }
 
 function* watchClearData() {
-  yield takeEvery('CLEAR_DATA', clearData);
+  yield takeEvery(clearCustomerAction.toString(), clearData);
 }
 
 function* watchFetchInitialData() {
-  yield takeEvery('FETCH_INITIAL_DATA', fetchRegions);
-  yield takeEvery('FETCH_INITIAL_DATA', fetchCustomers);
+  yield takeEvery(fetchInitialDataAction.toString(), fetchRegions);
+  yield takeEvery(fetchInitialDataAction.toString(), fetchCustomers);
 }
 
 export default function* rootSaga() {

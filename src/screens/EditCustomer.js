@@ -1,5 +1,11 @@
 import { useState, useEffect, useCallback } from 'react';
 import { StyleSheet, SafeAreaView } from 'react-native';
+import { Picker } from '@react-native-picker/picker';
+import DateTimePicker from '../components/DateTimePicker';
+import { useSelector } from 'react-redux';
+import moment from 'moment';
+import { useDispatch } from 'react-redux';
+import { saveCustomerAction } from '../features/actions';
 import {
   Layout,
   Text,
@@ -8,11 +14,6 @@ import {
   Button,
   Icon,
 } from '@ui-kitten/components';
-import { Picker } from '@react-native-picker/picker';
-import DateTimePicker from '../components/DateTimePicker';
-import { useSelector } from 'react-redux';
-import moment from 'moment';
-import { useDispatch } from 'react-redux';
 
 function EditCustomer({ navigation, route }) {
   const customer = useSelector(({ customers }) =>
@@ -46,16 +47,17 @@ function EditCustomer({ navigation, route }) {
     } else if (isReminderActive && moment(reminderTime).diff(moment()) <= 0) {
       alert('Date is in the past.');
     } else {
-      const user = {
-        id: route.params?.id ?? null,
-        firstName,
-        lastName,
-        region,
-        active: isActive,
-        reminderTime: isReminderActive ? reminderTime.toISOString() : null,
-        notificationId: customer?.notificationId,
-      };
-      dispatch({ type: 'SAVE_CUSTOMER', customer: user });
+      dispatch(
+        saveCustomerAction({
+          id: route.params?.id ?? null,
+          firstName,
+          lastName,
+          region,
+          active: isActive,
+          reminderTime: isReminderActive ? reminderTime.toISOString() : null,
+          notificationId: customer?.notificationId,
+        })
+      );
       navigation.goBack();
     }
   }, [firstName, lastName, isReminderActive, reminderTime, region, isActive]);

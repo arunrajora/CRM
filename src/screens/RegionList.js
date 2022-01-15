@@ -1,11 +1,11 @@
-import { StyleSheet } from 'react-native';
 import { useSelector } from 'react-redux';
 import { Layout, Icon, List, ListItem } from '@ui-kitten/components';
+import { customerListScreenName } from '../navigation/ScreenNames';
 
 function RegionList({ navigation }) {
   const regions = useSelector(({ regions }) => regions);
   return (
-    <Layout style={styles.container}>
+    <Layout>
       <List
         data={regions}
         renderItem={({ item: { id, name } }) => (
@@ -13,7 +13,7 @@ function RegionList({ navigation }) {
             title={name}
             accessoryRight={<Icon name='arrow-ios-forward' />}
             onPress={() =>
-              navigation.navigate('CustomerList', {
+              navigation.navigate(customerListScreenName, {
                 id,
               })
             }
@@ -23,9 +23,5 @@ function RegionList({ navigation }) {
     </Layout>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {},
-});
 
 export default RegionList;

@@ -4,7 +4,7 @@ import { Layout, Button, Text, Card } from '@ui-kitten/components';
 import moment from 'moment';
 import { useSelector } from 'react-redux';
 
-function Customer({ navigation, route }) {
+function Customer({ route }) {
   const customer = useSelector(({ customers }) =>
     customers.find(({ id }) => id === route.params.id)
   );
@@ -61,7 +61,6 @@ function Customer({ navigation, route }) {
 const styles = StyleSheet.create({
   button: {
     width: 100,
-    flexWrap: 'wrap',
   },
   text: {
     textAlign: 'center',

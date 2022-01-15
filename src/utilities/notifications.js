@@ -16,7 +16,7 @@ export async function AskPermissionForNotification(customer) {
     finalStatus = status;
   }
   if (finalStatus !== 'granted') {
-    alert('Failed to permission for notifications!');
+    alert('Failed to get permission for notifications!');
   }
   return finalStatus;
 }

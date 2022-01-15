@@ -1,17 +1,21 @@
 import { put, takeEvery } from 'redux-saga/effects';
+import 'react-native-get-random-values';
+import { v4 as uuidv4 } from 'uuid';
+
 import {
   saveCustomers,
   getCustomers,
   saveCustomer as saveCustomerAsyncStorage,
 } from '../../utilities/async_storage';
+
 import {
   setNotification,
   removeNotification,
 } from '../../utilities/notifications';
+
 import { customers } from '../../utilities/initialCustomers.json';
 import { setCustomer, updateCustomer } from './CustomerSlice';
-import 'react-native-get-random-values';
-import { v4 as uuidv4 } from 'uuid';
+import { saveCustomerAction } from '../actions';
 
 export function* fetchCustomers() {
   let initialCustomers = yield getCustomers();
@@ -22,7 +26,7 @@ export function* fetchCustomers() {
   yield put(setCustomer(initialCustomers));
 }
 
-export function* saveCustomer({ customer }) {
+export function* saveCustomer({ payload: customer }) {
   if (customer.id === null) {
     customer = {
       ...customer,
@@ -48,5 +52,5 @@ export function* saveCustomer({ customer }) {
 }
 
 export function* watchSaveCustomer() {
-  yield takeEvery('SAVE_CUSTOMER', saveCustomer);
+  yield takeEvery(saveCustomerAction.toString(), saveCustomer);
 }

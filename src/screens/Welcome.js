@@ -2,6 +2,8 @@ import { StyleSheet } from 'react-native';
 import { Layout, Text, Button, Icon } from '@ui-kitten/components';
 import { SafeAreaView, View } from 'react-native';
 import { useDispatch } from 'react-redux';
+import { regionListScreenName } from '../navigation/ScreenNames';
+import { clearCustomerAction } from '../features/actions';
 
 function Welcome({ navigation }) {
   const dispatch = useDispatch();
@@ -14,7 +16,7 @@ function Welcome({ navigation }) {
         <Button
           size='giant'
           style={styles.primaryButton}
-          onPress={() => navigation.navigate('RegionList')}
+          onPress={() => navigation.navigate(regionListScreenName)}
         >
           View all regions
         </Button>
@@ -24,7 +26,7 @@ function Welcome({ navigation }) {
           status='danger'
           accessoryLeft={<Icon name='trash' />}
           onPress={() => {
-            dispatch({ type: 'CLEAR_DATA' });
+            dispatch(clearCustomerAction());
             alert('Data cleared!');
           }}
         >
@@ -40,14 +42,10 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    flexDirection: 'column',
-    height: '100%',
     paddingBottom: 40,
   },
   heading: {
     flexGrow: 1,
-    flex: 1,
-    alignItems: 'center',
     justifyContent: 'center',
   },
   primaryButton: {

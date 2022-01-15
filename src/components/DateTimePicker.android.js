@@ -1,19 +1,12 @@
 import { useState } from 'react';
-import { Button, Layout, Text } from '@ui-kitten/components';
 import { StyleSheet } from 'react-native';
+import { Button, Layout } from '@ui-kitten/components';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import moment from 'moment';
-
-function getDate(date) {
-  return moment(date).format('L');
-}
-
-function getTime(date) {
-  return moment(date).format('LT');
-}
+import { getDate, getTime } from '../utilities/dateUtils';
 
 function Picker({ value, onChange }) {
   const [showMode, setShowMode] = useState(null);
+
   const onChangeDateTime = (event, selectedDate) => {
     const currentDate = selectedDate || value;
     setShowMode(null);
@@ -37,15 +30,13 @@ function Picker({ value, onChange }) {
         Change
       </Button>
       {showMode && (
-        <>
-          <DateTimePicker
-            value={value}
-            mode={showMode}
-            is24Hour={false}
-            display={showMode === 'date' ? 'calendar' : 'clock'}
-            onChange={onChangeDateTime}
-          />
-        </>
+        <DateTimePicker
+          value={value}
+          mode={showMode}
+          is24Hour={false}
+          display={showMode === 'date' ? 'calendar' : 'clock'}
+          onChange={onChangeDateTime}
+        />
       )}
     </Layout>
   );

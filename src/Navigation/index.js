@@ -3,30 +3,39 @@ import CustomerList from '../screens/CustomerList';
 import EditCustomer from '../screens/EditCustomer';
 import RegionList from '../screens/RegionList';
 import Welcome from '../screens/Welcome';
-import { Text, Button, Icon } from '@ui-kitten/components';
+import { Button, Icon } from '@ui-kitten/components';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import { fetchInitialDataAction } from '../features/actions';
+import {
+  homeScreenName,
+  regionListScreenName,
+  customerListScreenName,
+  customerDetailsScreenName,
+  customerEditScreenName,
+  appTitle,
+} from './ScreenNames';
 
 const Stack = createNativeStackNavigator();
 
-function NavigationScreens(props) {
+function NavigationScreens() {
   const regions = useSelector(({ regions }) => regions);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch({ type: 'FETCH_INITIAL_DATA' });
+    dispatch(fetchInitialDataAction());
   }, [dispatch]);
 
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name='Home'
+        name={homeScreenName}
         component={Welcome}
-        options={{ title: 'Customer Relationship Management' }}
+        options={{ title: appTitle }}
       />
       <Stack.Screen
-        name='RegionList'
+        name={regionListScreenName}
         component={RegionList}
         options={({ route, navigation }) => {
           return {
@@ -35,14 +44,14 @@ function NavigationScreens(props) {
               <Button
                 appearance='ghost'
                 accessoryLeft={<Icon name='edit' />}
-                onPress={() => navigation.navigate('CustomerEdit')}
+                onPress={() => navigation.navigate(customerEditScreenName)}
               />
             ),
           };
         }}
       />
       <Stack.Screen
-        name='CustomerList'
+        name={customerListScreenName}
         component={CustomerList}
         options={({ route }) => ({
           title: ` ${
@@ -51,7 +60,7 @@ function NavigationScreens(props) {
         })}
       />
       <Stack.Screen
-        name='CustomerDetails'
+        name={customerDetailsScreenName}
         component={Customer}
         options={({ route, navigation }) => {
           return {
@@ -61,7 +70,9 @@ function NavigationScreens(props) {
                 appearance='ghost'
                 accessoryLeft={<Icon name='edit' />}
                 onPress={() =>
-                  navigation.navigate('CustomerEdit', { id: route.params.id })
+                  navigation.navigate(customerEditScreenName, {
+                    id: route.params.id,
+                  })
                 }
               />
             ),
@@ -69,7 +80,7 @@ function NavigationScreens(props) {
         }}
       />
       <Stack.Screen
-        name='CustomerEdit'
+        name={customerEditScreenName}
         component={EditCustomer}
         options={{ title: 'Edit Customer' }}
       />

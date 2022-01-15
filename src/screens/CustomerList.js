@@ -1,11 +1,16 @@
 import { StyleSheet, SafeAreaView } from 'react-native';
 import { useSelector } from 'react-redux';
 import { Layout, Icon, List, ListItem, Button } from '@ui-kitten/components';
+import {
+  customerDetailsScreenName,
+  customerEditScreenName,
+} from '../navigation/ScreenNames';
 
 function CustomerList({ navigation, route }) {
   const customers = useSelector(({ customers }) =>
     customers.filter(({ region }) => route.params.id === region)
   );
+
   return (
     <Layout style={styles.container}>
       <SafeAreaView style={styles.container}>
@@ -17,7 +22,7 @@ function CustomerList({ navigation, route }) {
               description={item.active ? 'Active' : 'Inactive'}
               accessoryRight={<Icon name='arrow-ios-forward' />}
               onPress={() =>
-                navigation.navigate('CustomerDetails', {
+                navigation.navigate(customerDetailsScreenName, {
                   id: item.id,
                 })
               }
@@ -26,7 +31,7 @@ function CustomerList({ navigation, route }) {
         />
         <Button
           style={styles.button}
-          onPress={() => navigation.navigate('CustomerEdit')}
+          onPress={() => navigation.navigate(customerEditScreenName)}
           appearance='filled'
           accessoryLeft={<Icon name='person-add' />}
         >

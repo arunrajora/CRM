@@ -16,7 +16,7 @@ export const counterSlice = createSlice({
         state.push(action.payload);
       }
     },
-    clearData: (state, action) => {
+    clearData: () => {
       return [];
     },
     setCustomer: (state, action) => {
@@ -25,8 +25,6 @@ export const counterSlice = createSlice({
   },
 });
 
-// Action creators are generated for each case reducer function
-export const { updateCustomer, addCustomer, clearData, setCustomer } =
-  counterSlice.actions;
+export const { updateCustomer, clearData, setCustomer } = counterSlice.actions;
 
 export default counterSlice.reducer;
