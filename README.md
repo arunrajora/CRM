@@ -11,14 +11,12 @@ This is an application where you can-
 
 ## Install the dependencies
 
-run-
 ```
 yarn
 ```
 
 ## Start the application
 
-run-
 ```
 yarn start
 ```
