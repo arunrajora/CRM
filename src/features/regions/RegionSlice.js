@@ -1,13 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = [
-  { id: 1, name: 'North East' },
-  { id: 2, name: 'North West' },
-  { id: 3, name: 'South East' },
-  { id: 4, name: 'South West' },
-  { id: 5, name: 'North' },
-  { id: 6, name: 'Mid North' },
-];
+const initialState = [];
 
 export const counterSlice = createSlice({
   name: 'Region',

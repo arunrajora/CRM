@@ -1,8 +1,10 @@
 import { StyleSheet } from 'react-native';
 import { Layout, Text, Button, Icon } from '@ui-kitten/components';
 import { SafeAreaView, View } from 'react-native';
+import { useDispatch } from 'react-redux';
 
 function Welcome({ navigation }) {
+  const dispatch = useDispatch();
   return (
     <Layout style={styles.container}>
       <SafeAreaView style={styles.container}>
@@ -21,7 +23,10 @@ function Welcome({ navigation }) {
           size='medium'
           status='danger'
           accessoryLeft={<Icon name='trash' />}
-          onPress={() => alert('Storage cleared')}
+          onPress={() => {
+            dispatch({ type: 'CLEAR_DATA' });
+            alert('Data cleared!');
+          }}
         >
           Clear Storage
         </Button>

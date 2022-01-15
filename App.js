@@ -5,7 +5,6 @@ import { ApplicationProvider, IconRegistry } from '@ui-kitten/components';
 import { EvaIconsPack } from '@ui-kitten/eva-icons';
 import { Provider } from 'react-redux';
 import NavigationScreens from './src/navigation';
-
 import { store } from './src/store';
 
 const Stack = createNativeStackNavigator();

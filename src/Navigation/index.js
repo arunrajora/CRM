@@ -6,11 +6,17 @@ import Welcome from '../screens/Welcome';
 import { Text, Button, Icon } from '@ui-kitten/components';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 
 const Stack = createNativeStackNavigator();
 
 function NavigationScreens(props) {
   const regions = useSelector(({ regions }) => regions);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch({ type: 'FETCH_INITIAL_DATA' });
+  }, [dispatch]);
 
   return (
     <Stack.Navigator>
